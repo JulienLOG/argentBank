@@ -1,7 +1,10 @@
 {
   "name": "argent_bank",
+  "author": "JulienLOG on GitHub",
+  "description": "Hello 👋 argentBank is a minimalist React application for exploring Redux state management and API integration. This project focuses on building a responsive banking dashboard, connecting a React front-end with a RESTful API, and managing global state using Redux.",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "license": "GPL-3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
