@@ -1,49 +1,27 @@
 export default function LoginPage() {
 	return (
-		<div>
-			<nav class="main-nav">
-				<a class="main-nav-logo" href="./index.html">
-					<img
-						class="main-nav-logo-image"
-						src="/src/ui/images/argentBankLogo.png"
-						alt="Argent Bank Logo"
-					/>
-					<h1 class="sr-only">Argent Bank</h1>
-				</a>
-				<div>
-					<a class="main-nav-item" href="./sign-in.html">
-						<i class="fa fa-user-circle"></i>
+		<main className="main bg-dark">
+			<section className="sign-in-content">
+				<i className="fa fa-user-circle sign-in-icon"></i>
+				<h1>Sign In</h1>
+				<form>
+					<div className="input-wrapper">
+						<label htmlFor="username">Username</label>
+						<input type="text" id="username" />
+					</div>
+					<div className="input-wrapper">
+						<label htmlFor="password">Password</label>
+						<input type="password" id="password" />
+					</div>
+					<div className="input-remember">
+						<input type="checkbox" id="remember-me" />
+						<label htmlFor="remember-me">Remember me</label>
+					</div>
+					<button className="sign-in-button" type="submit">
 						Sign In
-					</a>
-				</div>
-			</nav>
-			<main class="main bg-dark">
-				<section class="sign-in-content">
-					<i class="fa fa-user-circle sign-in-icon"></i>
-					<h1>Sign In</h1>
-					<form>
-						<div class="input-wrapper">
-							<label for="username">Username</label>
-							<input type="text" id="username" />
-						</div>
-						<div class="input-wrapper">
-							<label for="password">Password</label>
-							<input type="password" id="password" />
-						</div>
-						<div class="input-remember">
-							<input type="checkbox" id="remember-me" />
-							<label for="remember-me">Remember me</label>
-						</div>
-						<a href="./user.html" class="sign-in-button">
-							Sign In
-						</a>
-						<button class="sign-in-button">Sign In</button>
-					</form>
-				</section>
-			</main>
-			<footer class="footer">
-				<p class="footer-text">Copyright 2020 Argent Bank</p>
-			</footer>
-		</div>
+					</button>
+				</form>
+			</section>
+		</main>
 	);
 }
