@@ -8,7 +8,7 @@ import "./ui/styles/main.css";
 
 const root = document.getElementById("root");
 ReactDOM.createRoot(root).render(
-	<StrictMode>
+	// <StrictMode>
 		<RouterProvider router={routes} />
-	</StrictMode>
+	/* </StrictMode> */
 );
