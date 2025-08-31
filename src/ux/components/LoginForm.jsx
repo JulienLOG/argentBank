@@ -1,26 +1,25 @@
 // _libs
 import { useContext } from "react";
 import { AuthContext } from "../../store/ContextAuth.jsx";
+import { POSTauth } from "../../services/APIservices.js";
 
 export default function LoginForm() {
 	const { userAuth, setUserAuth } = useContext(AuthContext);
-	console.log("AuthContext :", userAuth);
 
 	const handleChange = (evt) => {
 		const { name, value } = evt.target;
 		setUserAuth((prev) => ({ ...prev, [name]: value }));
 	};
 
-	const handleSubmit = (evt) => {
+	const handleSubmit = async (evt) => {
 		evt.preventDefault();
 		if (!userAuth.email.length || !userAuth.password.length) return;
-		setUserAuth((prev) => ({ ...prev }));
-		handleClear(evt);
+		const reponse = await POSTauth(userAuth);
+		handleClear(evt, reponse);
 	};
 
-	const handleClear = (evt) => {
-		evt.currentTarget.reset();
-		setUserAuth(() => ({ email: "", password: "" }));
+	const handleClear = (token) => {
+		setUserAuth((prev) => ({ ...prev, password: "", token }));
 	};
 
 	return (
