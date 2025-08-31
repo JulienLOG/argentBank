@@ -14,7 +14,7 @@ export const routes = createBrowserRouter([
 		ErrorBoundary: ErrorBoundaryPage,
 		children: [
 			{ index: true, Component: HomePage },
-			{ path: "login", Component: LoginPage },
+			{ path: "login", Component: LoginPage,},
 			{ path: "profile", Component: ProfilePage },
 		],
 	},

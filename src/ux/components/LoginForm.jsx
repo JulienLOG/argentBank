@@ -2,9 +2,11 @@
 import { useContext } from "react";
 import { AuthContext } from "../../store/ContextAuth.jsx";
 import { POSTauth } from "../../services/APIservices.js";
+import { useNavigate } from "react-router";
 
 export default function LoginForm() {
 	const { userAuth, setUserAuth } = useContext(AuthContext);
+	const navigate = useNavigate();
 
 	const handleChange = (evt) => {
 		const { name, value } = evt.target;
@@ -15,7 +17,8 @@ export default function LoginForm() {
 		evt.preventDefault();
 		if (!userAuth.email.length || !userAuth.password.length) return;
 		const reponse = await POSTauth(userAuth);
-		handleClear(evt, reponse);
+		handleClear(reponse);
+		navigate("/profile");
 	};
 
 	const handleClear = (token) => {
