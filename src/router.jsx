@@ -5,10 +5,13 @@ import { RouterProvider } from "react-router";
 import { routes } from "./routes.jsx";
 // _ui
 import "./ui/styles/main.css";
+import { AuthProvider } from "./store/ContextAuth.jsx";
 
 const root = document.getElementById("root");
 ReactDOM.createRoot(root).render(
-	// <StrictMode>
-		<RouterProvider router={routes} />
-	/* </StrictMode> */
+	<StrictMode>
+		<AuthProvider>
+			<RouterProvider router={routes} />
+		</AuthProvider>
+	</StrictMode>
 );
