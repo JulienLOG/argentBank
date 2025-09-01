@@ -20,3 +20,23 @@ export const POSTauth = async (auth) => {
 		console.log("POST promise is done!");
 	}
 };
+
+export const POSTprofile = async (token) => {
+	try {
+		const reponse = await fetch(`${ROOT}/api/v1/user/profile`, {
+			method: "POST",
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		if (reponse.ok) {
+			const data = await reponse.json();
+			return data.body;
+		}
+		return reponse;
+	} catch (err) {
+		console.log("POST promise is not done! :", err);
+	} finally {
+		console.log("POST promise is done!");
+	}
+};

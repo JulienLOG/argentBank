@@ -1,4 +1,15 @@
+import { useContext } from "react";
+import { AuthContext } from "../../store/ContextAuth.jsx";
+import { POSTprofile } from "../../services/APIservices.js";
+
 export default function ProfilePage() {
+	const {userAuth, setUserAuth} = useContext(AuthContext)
+	async function getData(){
+		const promise = await POSTprofile(userAuth.token);
+		console.log(promise);
+		return promise
+	}
+	getData()
 	return (
 		<main className="main bg-dark">
 			<div className="header">
