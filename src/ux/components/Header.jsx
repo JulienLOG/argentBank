@@ -1,9 +1,18 @@
 // _libs
-import { useMatch, Link } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../../store/ContextAuth.jsx";
+import { useMatch, Link, useNavigate } from "react-router";
 
 export default function Header({ name = "Tony" }) {
 	const routePaths = { index: "/", login: "/login", profile: "/profile" };
 	const matchProfilePath = useMatch(routePaths.profile);
+
+	const {userAuth, setUserAuth} = useContext(AuthContext);
+	const navigate = useNavigate();
+	const handleClick = () => {
+		setUserAuth(() => ({email: "", token: null}));
+		navigate("/login")
+	};
 
 	return (
 		<nav className="main-nav">
@@ -21,7 +30,11 @@ export default function Header({ name = "Tony" }) {
 						<i className="fa fa-user-circle"></i>
 						{name}
 					</Link>
-					<Link className="main-nav-item" to={routePaths.index}>
+					<Link
+						className="main-nav-item"
+						to="#"
+						onClick={handleClick}
+					>
 						<i className="fa fa-sign-out"></i>
 						Sign Out
 					</Link>
