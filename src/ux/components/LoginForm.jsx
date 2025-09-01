@@ -3,14 +3,20 @@ import { useContext } from "react";
 import { AuthContext } from "../../store/ContextAuth.jsx";
 import { POSTauth } from "../../services/APIservices.js";
 import { useNavigate } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
+import { setTest } from "../../app/actions/userSlice.js";
 
 export default function LoginForm() {
 	const { userAuth, setUserAuth } = useContext(AuthContext);
 	const navigate = useNavigate();
+	const testRedux = useSelector((state) => state.user);
+  	const dispatch = useDispatch();
+	console.log(testRedux)
 
 	const handleChange = (evt) => {
 		const { name, value } = evt.target;
 		setUserAuth((prev) => ({ ...prev, [name]: value }));
+		dispatch(setTest(value));
 	};
 
 	const handleSubmit = async (evt) => {
@@ -24,6 +30,8 @@ export default function LoginForm() {
 	const handleClear = (token) => {
 		setUserAuth((prev) => ({ ...prev, password: "", token }));
 	};
+
+
 
 	return (
 		<form onSubmit={handleSubmit}>
