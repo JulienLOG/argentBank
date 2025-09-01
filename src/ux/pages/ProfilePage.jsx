@@ -1,22 +1,26 @@
-import { useContext } from "react";
+// _lib
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../store/ContextAuth.jsx";
 import { POSTprofile } from "../../services/APIservices.js";
 
 export default function ProfilePage() {
-	const {userAuth, setUserAuth} = useContext(AuthContext)
-	async function getData(){
-		const promise = await POSTprofile(userAuth.token);
-		console.log(promise);
-		return promise
-	}
-	getData()
+	const { userAuth } = useContext(AuthContext);
+	const [profile, setProfile] = useState({ firstName: "", lastName: "" });
+	
+	useEffect(() => {
+		if (!userAuth?.token) return;
+		POSTprofile(userAuth?.token)
+			.then(({ firstName, lastName }) => setProfile({ firstName, lastName }))
+			.catch((err) => console.error(err));
+	}, [userAuth?.token]);
+
 	return (
 		<main className="main bg-dark">
 			<div className="header">
 				<h1>
 					Welcome back
 					<br />
-					Tony Jarvis!
+					{profile.firstName} {profile.lastName}!
 				</h1>
 				<button className="edit-button">Edit Name</button>
 			</div>
