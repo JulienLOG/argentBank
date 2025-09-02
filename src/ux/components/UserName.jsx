@@ -1,10 +1,30 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { UPDATE_USER_PROFILE } from "../../app/actions/userSlice";
 
 export default function UserName() {
 	const [isEdit, setIsEdit] = useState(false);
+	const [userName, setUserName] = useState({ firstName: "", lastName: "" });
 	const userStore = useSelector((state) => state.user);
+	const dispatch = useDispatch();
 
+	const handleSaveEdit = (evt) => {
+		evt.preventDefault();
+		dispatch(
+			UPDATE_USER_PROFILE({
+				firstName: userName.firstName,
+				lastName: userName.lastName,
+			})
+		);
+		setIsEdit(false);
+	};
+
+	const handleCloseEdit = () => {
+		setIsEdit(false);
+		setUserName({ firstName: "", lastName: "" });
+	};
+	console.log(userName);
+	console.log;
 	return (
 		<div className="header">
 			{isEdit ? (
@@ -13,14 +33,22 @@ export default function UserName() {
 						Welcome back
 						<br />
 					</h1>
-					<div className="names-edit">
+					<form onSubmit={handleSaveEdit}>
 						<input
 							className="#"
 							type="text"
 							id="firstName"
 							placeholder={userStore.profile.firstName}
-							onChange={(e) =>
-								console.log("firstName :", e.target.value)
+							value={
+								isEdit
+									? userName.firstName
+									: userStore.profile.firstName
+							}
+							onChange={(evt) =>
+								setUserName((prev) => ({
+									...prev,
+									firstName: evt.target.value,
+								}))
 							}
 						/>
 						<input
@@ -28,25 +56,34 @@ export default function UserName() {
 							type="text"
 							id="lastName"
 							placeholder={userStore.profile.lastName}
-							onChange={(e) =>
-								console.log("lastName :", e.target.value)
+							value={
+								isEdit
+									? userName.lastName
+									: userStore.profile.lastName
+							}
+							onChange={(evt) =>
+								setUserName((prev) => ({
+									...prev,
+									lastName: evt.target.value,
+								}))
 							}
 						/>
-					</div>
-					<div className="buttons-edit">
-						<button
-							className="edit-button"
-							onClick={() => console.log("save")}
-						>
-							Save
-						</button>
-						<button
-							className="edit-button"
-							onClick={() => setIsEdit(false)}
-						>
-							Cancel
-						</button>
-					</div>
+						<div className="buttons-edit">
+							<button
+								className="edit-button"
+								onClick={handleSaveEdit}
+							>
+								Save
+							</button>
+							<button
+								type="submit"
+								className="edit-button"
+								onClick={handleCloseEdit}
+							>
+								Cancel
+							</button>
+						</div>
+					</form>
 				</div>
 			) : (
 				<div>
