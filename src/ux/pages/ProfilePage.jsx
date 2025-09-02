@@ -1,18 +1,25 @@
 // _lib
-import { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../../store/ContextAuth.jsx";
+import { useEffect } from "react";
 import { POSTprofile } from "../../services/APIservices.js";
+import { SET_USER_PROFILE } from "../../app/actions/userSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+import { useMatch, useNavigate } from "react-router";
+import { paths } from "../../services/paths.js";
 
 export default function ProfilePage() {
-	const { userAuth } = useContext(AuthContext);
-	const [profile, setProfile] = useState({ firstName: "", lastName: "" });
-	
+	const isLogged = useMatch(paths.profile);
+	const userStore = useSelector((state) => state.user);
+	const dispatch = useDispatch();
+
 	useEffect(() => {
-		if (!userAuth?.token) return;
-		POSTprofile(userAuth?.token)
-			.then(({ firstName, lastName }) => setProfile({ firstName, lastName }))
-			.catch((err) => console.error(err));
-	}, [userAuth?.token]);
+			if (!isLogged) return;
+			const token = localStorage.getItem("token");
+			POSTprofile(token)
+				.then(({ id, firstName, lastName }) =>
+					dispatch(SET_USER_PROFILE({ id, firstName, lastName }))
+				)
+				.catch((err) => console.log(err));
+		}, [isLogged]);
 
 	return (
 		<main className="main bg-dark">
@@ -20,7 +27,7 @@ export default function ProfilePage() {
 				<h1>
 					Welcome back
 					<br />
-					{profile.firstName} {profile.lastName}!
+					{userStore.profile.firstName} {userStore.profile.lastName}!
 				</h1>
 				<button className="edit-button">Edit Name</button>
 			</div>
