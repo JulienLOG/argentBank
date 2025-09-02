@@ -2,35 +2,28 @@
 import { useEffect } from "react";
 import { POSTprofile } from "../../services/APIservices.js";
 import { SET_USER_PROFILE } from "../../app/actions/userSlice.js";
-import { useDispatch, useSelector } from "react-redux";
-import { useMatch, useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { useMatch } from "react-router";
 import { paths } from "../../services/paths.js";
+import UserName from "../components/UserName.jsx";
 
 export default function ProfilePage() {
 	const isLogged = useMatch(paths.profile);
-	const userStore = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-			if (!isLogged) return;
-			const token = localStorage.getItem("token");
-			POSTprofile(token)
-				.then(({ id, firstName, lastName }) =>
-					dispatch(SET_USER_PROFILE({ id, firstName, lastName }))
-				)
-				.catch((err) => console.log(err));
-		}, [isLogged]);
+		if (!isLogged) return;
+		const token = localStorage.getItem("token");
+		POSTprofile(token)
+			.then(({ id, firstName, lastName }) =>
+				dispatch(SET_USER_PROFILE({ id, firstName, lastName }))
+			)
+			.catch((err) => console.log(err));
+	}, [isLogged]);
 
 	return (
 		<main className="main bg-dark">
-			<div className="header">
-				<h1>
-					Welcome back
-					<br />
-					{userStore.profile.firstName} {userStore.profile.lastName}!
-				</h1>
-				<button className="edit-button">Edit Name</button>
-			</div>
+			<UserName />
 			<h2 className="sr-only">Accounts</h2>
 			<section className="account">
 				<div className="account-content-wrapper">
