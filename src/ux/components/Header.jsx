@@ -1,22 +1,40 @@
 // _libs
-import { useContext } from "react";
-import { AuthContext } from "../../store/ContextAuth.jsx";
+import { useSelector, useDispatch } from "react-redux";
+import { RESET_USER, SET_USER_PROFILE } from "../../app/actions/userSlice.js";
 import { useMatch, Link, useNavigate } from "react-router";
+import { useEffect } from "react";
+import { POSTprofile } from "../../services/APIservices.js";
 
-export default function Header({ name = "Tony" }) {
-	const routePaths = { index: "/", login: "/login", profile: "/profile" };
-	const matchProfilePath = useMatch(routePaths.profile);
+const paths = { index: "/", login: "/login", profile: "/profile" };
 
-	const {userAuth, setUserAuth} = useContext(AuthContext);
+export default function Header() {
+	const isLogged = useMatch(paths.profile);
+	const userStore = useSelector((state) => state.user);
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const handleClick = () => {
-		setUserAuth(() => ({email: "", token: null}));
-		navigate("/login")
+
+	useEffect(() => {
+		if (!isLogged) return;
+		const token = localStorage.getItem("token");
+		POSTprofile(token)
+			.then(({ id, firstName, lastName }) =>
+				dispatch(SET_USER_PROFILE({ id, firstName, lastName }))
+			)
+			.catch((err) => console.log(err));
+	}, [isLogged]);
+
+	const handleSignOut = () => {
+		localStorage.removeItem("token");
+		dispatch(RESET_USER());
+		navigate("/login");
 	};
 
 	return (
 		<nav className="main-nav">
-			<Link className="main-nav-logo" to={routePaths.index}>
+			<Link
+				className="main-nav-logo"
+				to={isLogged ? "#" : paths.index}
+			>
 				<img
 					className="main-nav-logo-image"
 					src="/src/ui/images/argentBankLogo.png"
@@ -24,16 +42,16 @@ export default function Header({ name = "Tony" }) {
 				/>
 				<h1 className="sr-only">Argent Bank</h1>
 			</Link>
-			{matchProfilePath ? (
+			{isLogged ? (
 				<div>
-					<Link className="main-nav-item" to={routePaths.profile}>
+					<Link className="main-nav-item" to={paths.profile}>
 						<i className="fa fa-user-circle"></i>
-						{name}
+						{userStore.profile.firstName}
 					</Link>
 					<Link
 						className="main-nav-item"
 						to="#"
-						onClick={handleClick}
+						onClick={handleSignOut}
 					>
 						<i className="fa fa-sign-out"></i>
 						Sign Out
@@ -41,7 +59,7 @@ export default function Header({ name = "Tony" }) {
 				</div>
 			) : (
 				<div>
-					<Link className="main-nav-item" to={routePaths.login}>
+					<Link className="main-nav-item" to={paths.login}>
 						<i className="fa fa-user-circle"></i>
 						Sign In
 					</Link>
