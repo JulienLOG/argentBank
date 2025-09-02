@@ -23,10 +23,9 @@ const userSlice = createSlice({
 			if (lastName !== undefined) state.profile.lastName = lastName;
 		},
 		UPDATE_USER_PROFILE: (state, action) => {
-			const { key, value } = action.payload;
-      const keysIsValid = ["firstName", "lastName"];
-      if (!keysIsValid.includes(key)) return;
-			state.profile[key] = value ?? "";
+			const { firstName, lastName } = action.payload;
+			if (firstName !== undefined) state.profile.firstName = firstName;
+			if (lastName !== undefined) state.profile.lastName = lastName;
 		},
 		CLEAR_USER_CREDENTIALS: (state) => {
 			state.credentials.email = "";
