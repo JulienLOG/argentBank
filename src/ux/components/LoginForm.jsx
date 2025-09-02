@@ -28,7 +28,7 @@ export default function LoginForm() {
 	};
 
 	const handleSucces = (reponse, route) => {
-		document.cookie = `token=${reponse}`;
+		localStorage.setItem("token", reponse);
 		setPassword("");
 		navigate(route);
 	};
