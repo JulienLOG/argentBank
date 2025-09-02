@@ -1,0 +1,1 @@
+export const paths = { index: "/", login: "/login", profile: "/profile" };
