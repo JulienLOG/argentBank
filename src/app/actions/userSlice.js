@@ -1,17 +1,51 @@
 // _lib
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { test: "" };
+const createInitialState = () => {
+	return {
+		credentials: { email: "" },
+		profile: { id: "", firstName: "", lastName: "" },
+	};
+};
 
 const userSlice = createSlice({
-  name: "user",
-  initialState,
-  reducers: {
-    setTest: (state, action) => {
-      state.test = action.payload;
-    },
-  },
+	name: "user",
+	initialState: createInitialState(),
+	reducers: {
+		SET_USER_CREDENTIALS: (state, action) => {
+			const { email } = action.payload;
+			state.credentials.email = email ?? "";
+		},
+		SET_USER_PROFILE: (state, action) => {
+			const { id, firstName, lastName } = action.payload;
+			if (id !== undefined) state.profile.id = id;
+			if (firstName !== undefined) state.profile.firstName = firstName;
+			if (lastName !== undefined) state.profile.lastName = lastName;
+		},
+		UPDATE_USER_PROFILE: (state, action) => {
+			const { key, value } = action.payload;
+      const keysIsValid = ["firstName", "lastName"];
+      if (!keysIsValid.includes(key)) return;
+			state.profile[key] = value ?? "";
+		},
+		CLEAR_USER_CREDENTIALS: (state) => {
+			state.credentials.email = "";
+		},
+		CLEAR_USER_PROFILE: (state) => {
+			state.profile.id = "";
+			state.profile.firstName = "";
+			state.profile.lastName = "";
+		},
+		RESET_USER: () => createInitialState(),
+	},
 });
 
-export const { setTest } = userSlice.actions;
+export const {
+	SET_USER_CREDENTIALS,
+	SET_USER_PROFILE,
+	UPDATE_USER_PROFILE,
+	CLEAR_USER_CREDENTIALS,
+	CLEAR_USER_PROFILE,
+	RESET_USER,
+} = userSlice.actions;
 export default userSlice.reducer;
