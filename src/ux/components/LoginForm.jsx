@@ -1,37 +1,37 @@
 // _libs
-import { useContext } from "react";
-import { AuthContext } from "../../store/ContextAuth.jsx";
-import { POSTauth } from "../../services/APIservices.js";
-import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { setTest } from "../../app/actions/userSlice.js";
+import { SET_USER_CREDENTIALS } from "../../app/actions/userSlice.js";
+import { useNavigate } from "react-router";
+import { POSTauth } from "../../services/APIservices.js";
+import { useState } from "react";
 
 export default function LoginForm() {
-	const { userAuth, setUserAuth } = useContext(AuthContext);
+	const userStore = useSelector((state) => state.user);
+	const [password, setPassword] = useState("");
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const testRedux = useSelector((state) => state.user);
-  	const dispatch = useDispatch();
-	console.log(testRedux)
 
 	const handleChange = (evt) => {
 		const { name, value } = evt.target;
-		setUserAuth((prev) => ({ ...prev, [name]: value }));
-		dispatch(setTest(value));
+		if (name === "email") dispatch(SET_USER_CREDENTIALS({ [name]: value }));
+		if (name === "password") setPassword(value);
 	};
 
 	const handleSubmit = async (evt) => {
 		evt.preventDefault();
-		if (!userAuth.email.length || !userAuth.password.length) return;
-		const reponse = await POSTauth(userAuth);
-		handleClear(reponse);
-		navigate("/profile");
+		if (!userStore.credentials.email.length || !password.length) return;
+		const reponse = await POSTauth({
+			email: userStore.credentials.email,
+			password: password,
+		});
+		handleSucces(reponse, "/profile");
 	};
 
-	const handleClear = (token) => {
-		setUserAuth((prev) => ({ ...prev, password: "", token }));
+	const handleSucces = (reponse, route) => {
+		document.cookie = `token=${reponse}`;
+		setPassword("");
+		navigate(route);
 	};
-
-
 
 	return (
 		<form onSubmit={handleSubmit}>
@@ -41,7 +41,7 @@ export default function LoginForm() {
 					type="text"
 					id="email"
 					name="email"
-					value={userAuth.email}
+					value={userStore.credentials.email}
 					onChange={handleChange}
 				/>
 			</div>
@@ -51,7 +51,7 @@ export default function LoginForm() {
 					type="password"
 					id="password"
 					name="password"
-					value={userAuth.password}
+					value={password}
 					onChange={handleChange}
 				/>
 			</div>
