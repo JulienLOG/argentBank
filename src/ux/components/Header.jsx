@@ -2,26 +2,13 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RESET_USER, SET_USER_PROFILE } from "../../app/actions/userSlice.js";
 import { useMatch, Link, useNavigate } from "react-router";
-import { useEffect } from "react";
-import { POSTprofile } from "../../services/APIservices.js";
-
-const paths = { index: "/", login: "/login", profile: "/profile" };
+import { paths } from "../../services/paths.js";
 
 export default function Header() {
 	const isLogged = useMatch(paths.profile);
 	const userStore = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (!isLogged) return;
-		const token = localStorage.getItem("token");
-		POSTprofile(token)
-			.then(({ id, firstName, lastName }) =>
-				dispatch(SET_USER_PROFILE({ id, firstName, lastName }))
-			)
-			.catch((err) => console.log(err));
-	}, [isLogged]);
 
 	const handleSignOut = () => {
 		localStorage.removeItem("token");
@@ -31,10 +18,7 @@ export default function Header() {
 
 	return (
 		<nav className="main-nav">
-			<Link
-				className="main-nav-logo"
-				to={isLogged ? "#" : paths.index}
-			>
+			<Link className="main-nav-logo" to={isLogged ? "#" : paths.index}>
 				<img
 					className="main-nav-logo-image"
 					src="/src/ui/images/argentBankLogo.png"
