@@ -31,6 +31,7 @@ export const POSTprofile = async (token) => {
 		});
 		if (reponse.ok) {
 			const data = await reponse.json();
+			console.log("reponse back POST log", data.body);
 			return data.body;
 		}
 		return reponse;
@@ -38,5 +39,27 @@ export const POSTprofile = async (token) => {
 		console.log("POST promise is not done! :", err);
 	} finally {
 		console.log("POST promise is done!");
+	}
+};
+
+export const PUTprofile = async (token, firstName, lastName) => {
+	try {
+		const reponse = await fetch(`${ROOT}/api/v1/user/profile`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({ firstName, lastName }),
+		});
+		if (reponse.ok) {
+			const data = await reponse.json();
+			return data.body;
+		}
+		return reponse;
+	} catch (err) {
+		console.log("PUT promise is not done! :", err);
+	} finally {
+		console.log("PUT promise is done!");
 	}
 };
