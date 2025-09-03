@@ -1,30 +1,45 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_USER_PROFILE } from "../../app/actions/userSlice";
+import { PUTprofile } from "../../services/APIservices";
 
 export default function UserName() {
+	const dispatch = useDispatch();
+	const { firstName, lastName } = useSelector((s) => s.user.profile);
 	const [isEdit, setIsEdit] = useState(false);
 	const [userName, setUserName] = useState({ firstName: "", lastName: "" });
-	const userStore = useSelector((state) => state.user);
-	const dispatch = useDispatch();
 
-	const handleSaveEdit = (evt) => {
-		evt.preventDefault();
+	useEffect(() => {
+		if (isEdit) {
+			setUserName({
+				firstName: firstName ?? "",
+				lastName: lastName ?? "",
+			});
+		}
+	}, [isEdit]);
+
+	const handleSaveEdit = async (e) => {
+		e.preventDefault();
+		const token = localStorage.getItem("token");
+		const updated = await PUTprofile(
+			token,
+			userName.firstName,
+			userName.lastName
+		);
 		dispatch(
 			UPDATE_USER_PROFILE({
-				firstName: userName.firstName,
-				lastName: userName.lastName,
+				firstName: updated.firstName ?? "",
+				lastName: updated.lastName ?? "",
 			})
 		);
 		setIsEdit(false);
 	};
 
-	const handleCloseEdit = () => {
-		setIsEdit(false);
-		setUserName({ firstName: "", lastName: "" });
+	const onChange = (e) => {
+		const { name, value } = e.target;
+		setUserName((prev) => ({ ...prev, [name]: value }));
 	};
-	console.log(userName);
-	console.log;
+
 	return (
 		<div className="header">
 			{isEdit ? (
@@ -35,50 +50,27 @@ export default function UserName() {
 					</h1>
 					<form onSubmit={handleSaveEdit}>
 						<input
-							className="#"
 							type="text"
 							id="firstName"
-							placeholder={userStore.profile.firstName}
-							value={
-								isEdit
-									? userName.firstName
-									: userStore.profile.firstName
-							}
-							onChange={(evt) =>
-								setUserName((prev) => ({
-									...prev,
-									firstName: evt.target.value,
-								}))
-							}
+							name="firstName"
+							value={userName.firstName}
+							onChange={onChange}
 						/>
 						<input
-							className="#"
 							type="text"
 							id="lastName"
-							placeholder={userStore.profile.lastName}
-							value={
-								isEdit
-									? userName.lastName
-									: userStore.profile.lastName
-							}
-							onChange={(evt) =>
-								setUserName((prev) => ({
-									...prev,
-									lastName: evt.target.value,
-								}))
-							}
+							name="lastName"
+							value={userName.lastName}
+							onChange={onChange}
 						/>
 						<div className="buttons-edit">
-							<button
-								className="edit-button"
-								onClick={handleSaveEdit}
-							>
+							<button type="submit" className="edit-button">
 								Save
 							</button>
 							<button
-								type="submit"
+								type="button"
 								className="edit-button"
-								onClick={handleCloseEdit}
+								onClick={() => setIsEdit(false)}
 							>
 								Cancel
 							</button>
@@ -90,10 +82,9 @@ export default function UserName() {
 					<h1>
 						Welcome back
 						<br />
-						<div className="userName">
-							{userStore.profile.firstName}{" "}
-							{userStore.profile.lastName}!
-						</div>
+						<span className="userName">
+							{firstName} {lastName}!
+						</span>
 					</h1>
 					<button
 						onClick={() => setIsEdit(true)}
