@@ -1,6 +1,6 @@
 export default function HomePage() {
 	return (
-		<main>
+		<main className="main bg-light">
 			<div className="hero">
 				<section className="hero-content">
 					<h2 className="sr-only">Promoted Content</h2>

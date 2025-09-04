@@ -48,22 +48,26 @@ export default function UserName() {
 						Welcome back
 						<br />
 					</h1>
-					<form onSubmit={handleSaveEdit}>
-						<input
-							type="text"
-							id="firstName"
-							name="firstName"
-							value={userName.firstName}
-							onChange={onChange}
-						/>
-						<input
-							type="text"
-							id="lastName"
-							name="lastName"
-							value={userName.lastName}
-							onChange={onChange}
-						/>
-						<div className="buttons-edit">
+					<form className="edit-user" onSubmit={handleSaveEdit}>
+						<div className="edit-user-items">
+							<input
+								className="edit-user-input"
+								type="text"
+								id="firstName"
+								name="firstName"
+								value={userName.firstName}
+								onChange={onChange}
+							/>
+							<input
+								className="edit-user-input"
+								type="text"
+								id="lastName"
+								name="lastName"
+								value={userName.lastName}
+								onChange={onChange}
+							/>
+						</div>
+						<div className="edit-user-items">
 							<button type="submit" className="edit-button">
 								Save
 							</button>

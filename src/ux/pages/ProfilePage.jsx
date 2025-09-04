@@ -22,7 +22,7 @@ export default function ProfilePage() {
 	}, [isLogged]);
 
 	return (
-		<main className="main bg-dark">
+		<main className="main bg-light">
 			<UserName />
 			<h2 className="sr-only">Accounts</h2>
 			<section className="account">
