@@ -7,15 +7,12 @@ import store from "./app/store.js";
 import { Provider } from "react-redux";
 // _ui
 import "./ui/styles/main.css";
-import { AuthProvider } from "./store/ContextAuth.jsx";
 
 const root = document.getElementById("root");
 ReactDOM.createRoot(root).render(
 	<StrictMode>
 		<Provider store={store}>
-			<AuthProvider>
-				<RouterProvider router={routes} />
-			</AuthProvider>
+			<RouterProvider router={routes} />
 		</Provider>
 	</StrictMode>
 );
