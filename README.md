@@ -13,7 +13,7 @@ As it stands, ArgentBank is an online banking application with a functional back
 <br />**Mission-Phase 2:** Prepare future routes for upcoming transaction features using the Swagger Editor tool and provide them in a YAML file.
 
 ![icon](./public/icon-link.svg) [see the backend](https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API/tree/master)
-<br /> ![icon](./public/icon-link.svg) [see the documentation]()
+<br /> ![icon](./public/icon-link.svg) [see the documentation](https://drive.google.com/file/d/1dk8GaC-DhEtz6rums5v3YhhK3tpqDkY1/view?usp=drive_link)
 <br /> ![icon](./public/icon-link.svg) [see the issues of mission](https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API/tree/master/.github/ISSUE_TEMPLATE)
 
 ![icon](./public/features.png)
