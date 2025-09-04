@@ -234,6 +234,7 @@ h1 {
 .input-wrapper input {
 	padding: 5px;
 	font-size: 1.2rem;
+	border: 1px solid black;
 }
 
 .footer {
