@@ -28,6 +28,7 @@ export default function LoginForm() {
 	};
 
 	const handleSucces = (reponse, route) => {
+		if (!reponse) return;
 		localStorage.setItem("token", reponse);
 		setPassword("");
 		navigate(route);

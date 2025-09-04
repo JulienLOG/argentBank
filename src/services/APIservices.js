@@ -9,6 +9,9 @@ export const POSTauth = async (auth) => {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ email, password }),
 		});
+		if (!reponse.ok) {
+			return false;
+		}
 		if (reponse.ok) {
 			const data = await reponse.json();
 			return data.body.token;
