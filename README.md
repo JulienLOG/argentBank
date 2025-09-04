@@ -1,12 +1,51 @@
-# React + Vite
+![logo](./public/ARGENTBANK.svg)
+<br />
+<br />
+[![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev)
+[![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-764ABC?logo=redux&logoColor=white)](https://redux-toolkit.js.org)
+[![React Router](https://img.shields.io/badge/React%20Router-CA4245?logo=reactrouter&logoColor=white)](https://reactrouter.com)
+<br />
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+As it stands, ArgentBank is an online banking application with a functional backend that processes data and exposes three routes. One for authentication, one for retrieving the profile after login, and the last for updating the username. The frontend remains to be developed, which is precisely the purpose of this mission.
 
-Currently, two official plugins are available:
+**Mission-Phase 1:** Build a React web app powered by Redux for authentication and profile editing features with data persistence.
+<br />**Mission-Phase 2:** Prepare future routes for upcoming transaction features using the Swagger Editor tool and provide them in a YAML file.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![icon](./public/icon-link.svg) [see the backend](https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API/tree/master)
+<br /> ![icon](./public/icon-link.svg) [see the documentation]()
+<br /> ![icon](./public/icon-link.svg) [see the issues of mission](https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API/tree/master/.github/ISSUE_TEMPLATE)
 
-## Expanding the ESLint configuration
+![icon](./public/features.png)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+<br /> 
+
+![icon](./public/icon-upload.svg) **Clone the ARGENTBANK project**
+
+```bash
+git init
+git clone https://github.com/JulienLOG/argentBank.git
+npm install
+```
+<br />
+
+![icon](./public/icon-route.svg) **Preview of routes**
+```bash
+POST /api/v1/user/login
+Headers: Content-Type: application/json
+Body: { "email": "user@mail.com", "password": "*****" }
+→ 200: { "body": { "token": "jwt..." } }
+```
+
+```bash
+POST /api/v1/user/profile
+Headers: Authorization: Bearer <token>
+→ 200: { "body": { "id": "...", "email": "...", "firstName": "...", "lastName": "..." } }
+```
+
+```bash
+PUT /api/v1/user/profile
+Headers: Authorization: Bearer <token>, Content-Type: application/json
+Body: { "firstName": "Steve", "lastName": "Rogers" }
+→ 200: { "body": { "id": "...", "email": "...", "firstName": "Steve", "lastName": "Rogers" } }
+```
