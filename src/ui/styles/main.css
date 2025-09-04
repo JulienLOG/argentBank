@@ -101,8 +101,7 @@ h1 {
 }
 
 .hero {
-	display: flex;
-	flex: 1;
+	height: 300px;
 	background-image: url("../images/bank-tree.jpeg");
 	background-position: 0 -50px;
 	background-size: cover;
@@ -136,7 +135,6 @@ h1 {
 	.hero {
 		display: flex;
 		flex: 1;
-		/* height: 400px; */
 		background-position: 0% 33%;
 	}
 
@@ -288,7 +286,7 @@ h1 {
 }
 
 .edit-button {
-  width: 120px;
+	width: 120px;
 	border-color: #00bc77;
 	background-color: #00bc77;
 	color: #fff;
@@ -330,7 +328,7 @@ h1 {
 .edit-user {
 	display: flex;
 	flex-direction: column;
-  align-items: center;
+	align-items: center;
 	gap: 1rem;
 }
 
@@ -340,5 +338,5 @@ h1 {
 }
 
 .edit-user-input {
-  padding: 1rem;
+	padding: 1rem;
 }
