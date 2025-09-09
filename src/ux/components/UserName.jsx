@@ -1,7 +1,8 @@
+// _libs and _store and _services
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_USER_PROFILE } from "../../app/actions/userSlice";
-import { PUTprofile } from "../../services/APIservices";
+import { PUTprofile } from "../../services/callApi.js";
 
 export default function UserName() {
 	const dispatch = useDispatch();
