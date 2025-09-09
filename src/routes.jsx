@@ -5,6 +5,7 @@ import AppPage from "./ux/pages/AppPage.jsx";
 import HomePage from "./ux/pages/HomePage.jsx";
 import LoginPage from "./ux/pages/LoginPage.jsx";
 import ProfilePage from "./ux/pages/ProfilePage.jsx";
+import RequireAuth from "./ux/pages/RequireAuthPage.jsx";
 import ErrorBoundaryPage from "./ux/pages/ErrorBoundaryPage.jsx";
 
 export const routes = createBrowserRouter([
@@ -14,8 +15,11 @@ export const routes = createBrowserRouter([
 		ErrorBoundary: ErrorBoundaryPage,
 		children: [
 			{ index: true, Component: HomePage },
-			{ path: "login", Component: LoginPage,},
-			{ path: "profile", Component: ProfilePage },
+			{ path: "login", Component: LoginPage },
+			{
+				Component: RequireAuth,
+				children: [{ path: "profile", Component: ProfilePage }],
+			},
 		],
 	},
 ]);
