@@ -5,6 +5,7 @@ const createInitialState = () => {
 	return {
 		credentials: { email: "" },
 		profile: { id: "", firstName: "", lastName: "" },
+		connect: false,
 	};
 };
 
@@ -15,6 +16,9 @@ const userSlice = createSlice({
 		SET_USER_CREDENTIALS: (state, action) => {
 			const { email } = action.payload;
 			state.credentials.email = email ?? "";
+		},
+		SET_USER_CONNECTED: (state, action) => {
+			state.connect = Boolean(action.payload);
 		},
 		SET_USER_PROFILE: (state, action) => {
 			const { id, firstName, lastName } = action.payload;
@@ -41,6 +45,7 @@ const userSlice = createSlice({
 
 export const {
 	SET_USER_CREDENTIALS,
+	SET_USER_CONNECTED,
 	SET_USER_PROFILE,
 	UPDATE_USER_PROFILE,
 	CLEAR_USER_CREDENTIALS,
