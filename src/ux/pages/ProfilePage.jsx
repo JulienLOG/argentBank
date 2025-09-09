@@ -1,19 +1,21 @@
 // _lib
 import { useEffect } from "react";
-import { POSTprofile } from "../../services/APIservices.js";
+import { POSTprofile } from "../../services/callApi.js";
 import { SET_USER_PROFILE } from "../../app/actions/userSlice.js";
 import { useDispatch } from "react-redux";
-import { useMatch } from "react-router";
+import { useMatch, useNavigate } from "react-router";
 import { paths } from "../../services/paths.js";
 import UserName from "../components/UserName.jsx";
 
 export default function ProfilePage() {
 	const isLogged = useMatch(paths.profile);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!isLogged) return;
 		const token = localStorage.getItem("token");
+		if (token === null) navigate(paths.login);
+		if (!isLogged) return;
 		POSTprofile(token)
 			.then(({ id, firstName, lastName }) =>
 				dispatch(SET_USER_PROFILE({ id, firstName, lastName }))
